@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow | Smart To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+```
+<div class="container">
+
+    <h1>TaskFlow</h1>
+
+    <p class="subtitle">
+        Organize your day. Track your progress. Stay productive.
+    </p>
+
+    <div class="input-section">
+
+        <input
+            type="text"
+            id="taskInput"
+            placeholder="Enter a task..."
+        >
+
+        <button id="addTaskButton">
+            Add Task
+        </button>
+
+    </div>
+
+    <div class="toolbar">
+
+        <span id="taskCounter">
+            Tasks: 0
+        </span>
+
+        <button id="clearTasksButton">
+            Clear All
+        </button>
+
+    </div>
+
+    <ul id="taskList"></ul>
+
+    <div class="instructions">
+        <p>✓ Click a task to mark it completed</p>
+        <p>✓ Double-click a task to delete it</p>
+    </div>
+
+</div>
+```
+
+<script>
+
+const taskInput = document.getElementById("taskInput");
+const taskList = document.getElementById("taskList");
+const taskCounter = document.getElementById("taskCounter");
+
+function updateCounter() {
+    taskCounter.textContent =
+        `Tasks: ${taskList.children.length}`;
+}
+
+function addTask() {
+
+    const taskText = taskInput.value.trim();
+
+    if (taskText === "") return;
+
+    const li = document.createElement("li");
+
+    li.textContent = taskText;
+
+    taskList.appendChild(li);
+
+    taskInput.value = "";
+
+    updateCounter();
+}
+
+document
+.getElementById("addTaskButton")
+.addEventListener("click", addTask);
+
+taskInput.addEventListener("keypress", function(e){
+
+    if(e.key === "Enter"){
+        addTask();
+    }
+
+});
+
+document
+.getElementById("clearTasksButton")
+.addEventListener("click", function(){
+
+    taskList.innerHTML = "";
+
+    updateCounter();
+
+});
+
+taskList.addEventListener("click", function(e){
+
+    if(e.target.tagName === "LI"){
+        e.target.classList.toggle("completed");
+    }
+
+});
+
+taskList.addEventListener("dblclick", function(e){
+
+    if(e.target.tagName === "LI"){
+
+        e.target.remove();
+
+        updateCounter();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
+
+   
